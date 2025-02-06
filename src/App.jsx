@@ -1,21 +1,45 @@
 import './App.css'
 import ProductCard from './components/productCard'
+import { SiAudiomack } from "react-icons/si";
+import { TbGraphFilled } from "react-icons/tb";
+import { MdBookmarkAdded } from "react-icons/md";
+import { BsSpeakerFill } from "react-icons/bs";
+import { FaPeopleGroup } from "react-icons/fa6";
 function App() {
 
 
   return (
-    <div>
-      <ProductCard name ="Watch" price ="500/-" 
-      
-      description ="dsadsadsasdvvvbbnn" 
-      
-      photoUrl ="https://img.drz.lazcdn.com/static/lk/p/4969c39e68a7cbd19d468af022314064.jpg_400x400q75.jpg_.webp" />
+    <div className="w-full h-screen flex">
+      <div className='w-[400px] h-full bg-gray-400'>
+        <button className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center
+        " >
+          <TbGraphFilled/>
+          Dashboard
+        </button>
 
-      <ProductCard name="sdadsa" price="dsdsd" photoUrl="https://img.drz.lazcdn.com/g/kf/Se428261dc3f14d92b082f0aed2f6a4baB.png_400x400q75.png_.webp" />
+        <button className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center" >
+          <MdBookmarkAdded/>
+          Bookings
+        </button>
 
+        <button className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center" >
+          <BsSpeakerFill/>
+          Items
+        </button>
+
+        <button className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
+          <FaPeopleGroup/>
+          Users
+        </button>
+      
+      </div>
+      <div className='w-full bg-blue-900'>
+        <SiAudiomack className="text-[300px]"/>
+      
+      </div>
     </div>
     
-  )
+  );
 }
 
 export default App
