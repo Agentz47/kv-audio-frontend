@@ -1,8 +1,8 @@
 import { BsSpeakerFill } from "react-icons/bs";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { MdBookmarkAdded } from "react-icons/md";
-import { SiAudiomack } from "react-icons/si";
 import { TbGraphFilled } from "react-icons/tb";
+import { Link, Route, Routes } from "react-router-dom";
 
 export default function AdminPage(){
     return(
@@ -14,24 +14,29 @@ export default function AdminPage(){
                   Dashboard
                 </button>
         
-                <button className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center" >
+                <Link to="/admin/bookings" className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center" >
                   <MdBookmarkAdded/>
                   Bookings
-                </button>
+                </Link>
         
-                <button className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center" >
+                <Link to="/admin/items" className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center" >
                   <BsSpeakerFill/>
                   Items
-                </button>
+                </Link>
         
-                <button className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
+                <Link to="/admin/users" className="w-full h-[40px] text-[25px] font-bold flex justify-center items-center">
                   <FaPeopleGroup/>
                   Users
-                </button>
+                </Link>
               
               </div>
-              <div className='w-full bg-blue-900'>
-                <SiAudiomack className="text-[300px]"/>
+              <div className='w-[calc(100vw-400px)] bg-blue-900'>
+                <Routes path="/*">
+                  <Route path="/bookings" element={<h1>Booking</h1>}/>
+                  <Route path="/items" element={<h1>Items</h1>}/>
+                  <Route path="/users" element={<h1>Users</h1>}/>
+                </Routes>
+                
               
               </div>
             </div>
