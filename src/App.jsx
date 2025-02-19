@@ -16,7 +16,6 @@ function App() {
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/admin/*" element={<AdminPage/>}/>
         <Route path="/*" element={<HomePage/>}/>
-        <Route path="/*" element={<h1>Not Found</h1>}/>
       </Routes>
     </BrowserRouter>
     
