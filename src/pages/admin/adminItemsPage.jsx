@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaCirclePlus } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FaCirclePlus, FaEye } from "react-icons/fa6";
 
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AdminItemsPage() {
   const [items, setItems] = useState([]);
@@ -90,23 +91,23 @@ export default function AdminItemsPage() {
                   <td className="px-4 py-3 text-center">
                     <button
                       className="text-white hover:text-black font-semibold px-4 py-2 rounded bg-blue-500"
-                      onClick={() =>{
-                        navigate('/admin/items/edit', {state: product})
+                      onClick={() => {
+                        navigate('/admin/items/edit', { state: product });
                       }}
                     >
-                      Edit
+                      <FaEdit className="inline mr-1" /> Edit
                     </button>
                     <button
                       className="ml-3 text-white hover:text-black font-semibold px-4 py-2 rounded bg-red-500"
                       onClick={() => handleDelete(product.key)}
                     >
-                      Delete
+                      <FaTrashAlt className="inline mr-1" /> Delete
                     </button>
                     <button
                       className="ml-3 text-white hover:text-black font-semibold px-4 py-2 rounded bg-green-500"
                       onClick={() => handleView(product.key)}
                     >
-                      View
+                      <FaEye className="inline mr-1" /> View
                     </button>
                   </td>
                 </tr>
