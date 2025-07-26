@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function ProductCard(props) {
     const item = props.item;
 
@@ -11,7 +13,7 @@ export default function ProductCard(props) {
                 </p>
                 <div className="mt-4">
                     <span className="text-gray-600 text-sm">{item.category}</span><br /><br />
-                    <span className="text-gray-800 font-bold text-lg">{item.price}</span>
+                    <span className="text-green-500 font-bold text-wrap">{item.price}</span>
                     
                 </div>
                 <div className="mt-2">
@@ -24,9 +26,9 @@ export default function ProductCard(props) {
                 </div>
             </div>
             <div className="px-6 py-4">
-                <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
+                <Link to={"/product/"+item.key} className="text-center bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-200">
                     View Details
-                </button>
+                </Link>
             </div>
         </div>
     );
