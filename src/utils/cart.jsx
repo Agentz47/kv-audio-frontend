@@ -49,3 +49,11 @@ export function formatDate(date){
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
+
+export function updateCartQty(itemKey, qty) {
+  const cart = JSON.parse(localStorage.getItem("cart") || "{}");
+  if (cart[itemKey]) {
+    cart[itemKey] = qty;
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+}
