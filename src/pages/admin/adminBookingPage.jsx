@@ -83,7 +83,7 @@ export default function AdminOrdersPage() {
       )}
       {
         modelOpened &&(
-            <div className="fixed top-0 left-0 w-full h-full bg-[#00000065] flex justify-center items-center">
+            <div className="fixed top-0 left-0 w-full h-full bg-[#00000075] flex justify-center items-center">
                 <div className="w-[500px] bg-white p-4 rounded-lg shadow-lg">
                     <h1 className="text-2xl font-semibold mb-4">Order Details</h1>
                     <div className="flex flex-col gap-2">
