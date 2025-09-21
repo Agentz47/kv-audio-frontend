@@ -3,75 +3,110 @@ import "./login.css";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
 
-export default function LoginPage(){
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
-    const navigate = useNavigate()
-
-    function handleOnSubmit(e){
-        e.preventDefault()
-        console.log(email,password)
-        const backendUrl = import.meta.env.VITE_BACKEND_URL
-
-        axios.post(`${backendUrl}/api/users/login`,
-        {
-            email: email,
-            password: password
-        }
-    ).then((res)=>{
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const googleLogin = useGoogleLogin({
+    onSuccess: (res) => {
+      console.log(res);
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/google`,{
+        accessToken : res.access_token
+      }).then((res)=>{
         console.log(res)
-        toast.success("Successfully logged in")
-
+        toast.success("Login Success")
         const user = res.data.user
-
-        localStorage.setItem("token",res.data.token)
-
+        localStorage.setItem("token", res.data.token)
         if(user.role === "admin"){
-            navigate("/admin/")
+            navigate("/admin")
         }else{
             navigate("/")
         }
-
-    }).catch((err)=>{
+      }).catch((err)=>{
         console.log(err)
-        toast.error(err.response.data.error)
-    })
-    }
+      })
+    },
+  });
 
-    return(
-        <div className="bg-picture w-full h-screen  flex justify-center items-center">
-            <form onSubmit={handleOnSubmit}>
-            <div className="w-[400px] h-[400px] backdrop-blur-xl rounded-2xl flex justify-center items-center flex-col relative">
-                <img src="/logo.png" alt="logo" className="w-[100px] h-[100px] object-cover"/>
+  function handleOnSubmit(e) {
+    e.preventDefault();
+    console.log(email, password);
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-                <input type="email"
-                placeholder="Email"
-                className="mt-8 w-[300px] h-[30px] bg-transparent border-b-2 border-white text-white text-xl outline-none"
-                value={email}
-                onChange={
-                    (e)=>{
-                        setEmail(e.target.value);
-                }}
-                />
+    axios
+      .post(`${backendUrl}/api/users/login`, {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        console.log(res);
+        toast.success("Successfully logged in");
+        const user = res.data.user;
+        localStorage.setItem("token", res.data.token);
 
-                <input type="password"
-                placeholder="Password"
-                className="w-[300px] h-[30px] mt-8 bg-transparent border-b-2 border-white text-white text-xl outline-none"
-                value={password}
-                onChange={
-                    (e)=>{
-                        setPassword(e.target.value);
-                }}
-                />
+        if(user.emailVerified == false){
+            navigate("/verify-email")
+            return;
+        }
 
-                <button className="w-[300px] h-[50px] my-10 bg-blue-600 text-white text-2xl font-bold rounded-lg">
-                    Login
-                </button>
+        if (user.role === "admin") {
+          navigate("/admin/");
+        } else {
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.error);
+      });
+  }
 
-                
-            </div>
-            </form>
+  return (
+    <div className="bg-picture w-full h-screen flex justify-center items-center">
+      <form onSubmit={handleOnSubmit} autoComplete="off">
+        <div className="w-[400px] h-[400px] backdrop-blur-xl rounded-2xl flex justify-center items-center flex-col relative">
+          <img
+            src="/logo.png"
+            alt="logo"
+            className="w-[100px] h-[100px] object-cover"
+          />
+
+          <input
+            type="email"
+            placeholder="Email"
+            className="mt-8 w-[300px] h-[30px] bg-transparent border-b-2 border-white text-white text-xl outline-none"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            autoComplete="off"
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-[300px] h-[30px] mt-8 bg-transparent border-b-2 border-white text-white text-xl outline-none"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            autoComplete="new-password"
+          />
+
+          <button className="w-[300px] h-[50px] my-10 bg-blue-600 text-white text-2xl font-bold rounded-lg">
+            Login
+          </button>
+          <div
+            type="button"
+            className="w-[300px] h-[50px] my-10 bg-blue-600 text-white text-2xl font-bold rounded-lg flex justify-center items-center"
+            onClick={googleLogin}
+          >
+            Login with Google
+          </div>
         </div>
-    )
+      </form>
+    </div>
+  );
 }
